@@ -1,16 +1,7 @@
-{% extends 'partials/base.html.twig' %}
-{% block javascripts %}
-  {{ parent() }}
-  {% do assets.addJs('theme://js/script2.js', {'priority': 99, 'group':'bottom'}) %}
-{% endblock %}
+{% extends 'partials/insidepage.html.twig' %}
 {% block content %}
-  <a class="c-site-identity c-site-identity--sidebar" href="{{ home_url }}">Andrea Crawford</a>
-  {% include 'partials/mainmenu.html.twig' with {'classes':'c-menu--sidebar'} %}
-  <canvas id="canvas" width="650" height="650"></canvas>
-  <div class="c-container--sidebar">
   {{ page.content }}
   {% for item in page.collection %}
     {% include 'partials/folioitem.html.twig' %}
   {% endfor %}
-  </div>
 {% endblock %}
