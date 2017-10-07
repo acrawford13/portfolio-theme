@@ -1,0 +1,48 @@
+{% if item.media.images %}
+<div class="c-folio-item {{ item.taxonomy.tag|join('*')|replace(' ','-')|replace('*',' ')|lower }}">
+  <h2 class="c-folio-item__title">{{ item.header.title }}</h2>
+  <h3 class="c-folio-item__subtitle">{{ item.taxonomy.tag|join('/') }}, {{ item.date|date('Y') }}</h3>
+  <div class="c-folio-item__images c-folio-item__images--{{ item.header.imagelayout ?: 'flex' }}
+    {% if item.header.imagelayout == 'grid' %}
+      h-aspect h-aspect--{{ item.header.aspect }}
+    {% endif %}">
+    {% if item.header.featured_image %}
+      {% if item.header.featured_image is iterable %}
+        {% for image in item.header.featured_image %}
+          <div class="c-folio-item__image" style="
+          {% if image.columns %}
+            grid-column-start:{{ image.columns.start }}; grid-column-end:span {{ image.columns.span }};
+          {% endif %}
+          {% if image.columns %}
+            grid-row-start:{{ image.rows.start }}; grid-row-end:span {{ image.rows.span }};
+          {% endif %}">
+          {% if image.image %}
+            {{ item.media[image.image].html('','','') }}
+          {% else %}
+            {{ item.media[image].html('','','') }}
+          {% endif %}
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="c-folio-item__image">
+        {{ item.media[item.header.featured_image].html('','','') }}
+      </div>
+      {% endif %}
+    {% else %}
+      <div class="c-folio-item__image">
+      {{ item.media.images|first.html('','','') }}
+    </div>
+    {% endif %}
+  </div>
+  <div class="c-folio-item__content">
+    <p class="c-folio-item__description">{{ item.header.description }}</p>
+    {% if item.header.skills %}
+    <ul class="c-skill-list">
+      {% for skill in item.header.skills %}
+      <li class="c-skill-list__item">{{ skill }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
