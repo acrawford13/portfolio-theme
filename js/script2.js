@@ -52,7 +52,7 @@ var gR = function(howrandom){
 
 var rCol = function(rfloor,rceil,gfloor,gceil,bfloor,bceil,ofloor,oceil){
     return "rgba("+(rfloor+(Math.floor(Math.random()*(rceil-rfloor))))+","+(gfloor+(Math.floor(Math.random()*(gceil-gfloor))))+","+(bfloor+(Math.floor(Math.random()*(bceil-bfloor))))+","+(ofloor+(Math.random()*(oceil-ofloor)))+")";
-}
+};
 
 
 var mR = function(quant,random){
@@ -97,9 +97,10 @@ var makeCircles = function(){
         var cwch = Math.sqrt(Math.pow(cw,2),Math.pow(ch,2));
         var fade = Math.floor(255-(255/(cwch/ij)));
         var opacityFade = 1-(ij/(cwch*2));
-        if(cw<=1120){var tabletFade = 1-j/ch;}else{var tabletFade = 1};
+        var tabletFade;
+        if(cw<=1120){tabletFade = 1-j/ch;}else{tabletFade = 1;}
         c.lineWidth=0.5;
-        c.strokeStyle="rgba(120,120,120,"+opacityFade*tabletFade+")"
+        c.strokeStyle="rgba(120,120,120,"+opacityFade*tabletFade+")";
         c.stroke();
         }
     }
@@ -125,7 +126,7 @@ var makeCircles = function(){
 
         }
 
-}
+};
 
 var contact = function(){
   shapeArray=[];
@@ -142,7 +143,7 @@ var contact = function(){
 var filtermenu = $('#selectmenu2');
 var checks = function(){
     if(filtermenu.find('input[type=radio]:checked').length==0||filtermenu.find('input[type=radio]:checked')[0].id=='all'){
-        $('.folio-piece').show()
+        $('.folio-piece').show();
 
     } else {
         var keep = filtermenu.find('input[type=radio]:checked');
@@ -150,7 +151,7 @@ var checks = function(){
         for(var i=0;i<keep.length;i++){
             var show = (keep[i].id);
             $('.'+show).show();
-        };
+        }
     }
     $('html, body').animate({scrollTop:0});
 };
@@ -192,15 +193,15 @@ $(document).scroll(function(){
 
 
 var evenSpan = function(classSelect){
-var selectedArray = document.getElementsByClassName(classSelect);
-for(var i=0; i<selectedArray.length; i++){
-    var span = selectedArray[i];
-    var oldWidth = selectedArray[i].getBoundingClientRect().width;
-    var newWidth = Math.ceil(oldWidth/gapSize)*gapSize;
-    console.log(oldWidth + "//" + newWidth);
-    span.style.width = newWidth-20 + 'px';
-}
-}
+  var selectedArray = document.getElementsByClassName(classSelect);
+  for(var i=0; i<selectedArray.length; i++){
+      var span = selectedArray[i];
+      var oldWidth = selectedArray[i].getBoundingClientRect().width;
+      var newWidth = Math.ceil(oldWidth/gapSize)*gapSize;
+      console.log(oldWidth + "//" + newWidth);
+      span.style.width = newWidth-20 + 'px';
+  }
+};
 
 evenSpan('blockySpan');
 

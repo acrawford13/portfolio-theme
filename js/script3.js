@@ -52,7 +52,7 @@ var gR = function(howrandom){
 
 var rCol = function(rfloor,rceil,gfloor,gceil,bfloor,bceil,ofloor,oceil){
     return "rgba("+(rfloor+(Math.floor(Math.random()*(rceil-rfloor))))+","+(gfloor+(Math.floor(Math.random()*(gceil-gfloor))))+","+(bfloor+(Math.floor(Math.random()*(bceil-bfloor))))+","+(ofloor+(Math.random()*(oceil-ofloor)))+")";
-}
+};
 
 
 var mR = function(quant,random){
@@ -73,7 +73,7 @@ var canvasMove = function(){
     $('.name').addClass('dark');
     $('#menu').addClass('dark');
     if (cw<600) {
-      
+
     }
     shapeArray.push({'corners':[[gridW+1,-1],[gridW-5,-1],[gridW-5,gridH+1],[gridW+1,gridH+1]],'color':'rgba(255,10,16,0.6)'});
     shapeArray.push({'corners':[[4,hd],[2,hd+2],[4,hd+4]],'color':'rgba(255,42,30,0.9)'});
@@ -85,8 +85,8 @@ var canvasMove = function(){
 
 var makeCircles = function(){
         c.clearRect(0,0,cw,ch);
-        
-        
+
+
     for(var i=0; i<cw+gapSize; i+=gapSize) {
         for(var j=0;j<ch+gapSize;j+=gapSize){
         angle=Math.atan2(j-mouseY,i-mouseX);
@@ -105,8 +105,8 @@ var makeCircles = function(){
         c.stroke();
         }
     }
-    
-    
+
+
         for(var k=0;k<shapeArray.length;k++){
             //var goodPath = new Path2D();
             var secPath = [];
@@ -124,10 +124,10 @@ var makeCircles = function(){
     }
     c.closePath();
     c.fill();
-    
-        }      
 
-}
+        }
+
+};
 
 var contact = function(){
   shapeArray=[];
@@ -144,14 +144,14 @@ var contact = function(){
 
 var checks = function(){
     if($('#selectmenu').find('input[type=checkbox]:checked').length==0){
-        $('.folio-piece').show()
+        $('.folio-piece').show();
     } else {
         var keep = $('#selectmenu').find('input[type=checkbox]:checked');
         $('.folio-piece').hide();
         for(var i=0;i<keep.length;i++){
             var show = (keep[i].id);
             $('.'+show).show();
-        };
+        }
     }
     $('html, body').animate({scrollTop:0});
 };
@@ -159,7 +159,7 @@ var checks = function(){
 $('#selectmenu').find('input[type=checkbox]').on('click',checks);
 
 var init = function(){
-    
+
     fadeClick = 1;
     shapeArray = [nameRect];
     mR(6,24);
@@ -185,15 +185,15 @@ $(document).scroll(function(){
 });
 
 var evenSpan = function(classSelect){
-var selectedArray = document.getElementsByClassName(classSelect);
-for(var i=0; i<selectedArray.length; i++){
-    var span = selectedArray[i];
-    var oldWidth = selectedArray[i].getBoundingClientRect().width;
-    var newWidth = Math.ceil(oldWidth/gapSize)*gapSize;
-    console.log(oldWidth + "//" + newWidth);
-    span.style.width = newWidth-20 + 'px';
-}
-}
+  var selectedArray = document.getElementsByClassName(classSelect);
+  for(var i=0; i<selectedArray.length; i++){
+      var span = selectedArray[i];
+      var oldWidth = selectedArray[i].getBoundingClientRect().width;
+      var newWidth = Math.ceil(oldWidth/gapSize)*gapSize;
+      console.log(oldWidth + "//" + newWidth);
+      span.style.width = newWidth-20 + 'px';
+  }
+};
 
 evenSpan('blockySpan');
 
