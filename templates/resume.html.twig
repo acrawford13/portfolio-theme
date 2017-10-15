@@ -1,6 +1,17 @@
 {% extends 'partials/insidepage.html.twig' %}
 {% block content %}
 <div class="c-resume">
-  {{ page.content }}
+  {% if page.header.experience %}
+    <h2>Professional Experience</h2>
+    {% for job in page.header.experience %}
+      {% include 'partials/resume/job.html.twig' %}
+    {% endfor %}
+  {% endif %}
+  {% if page.header.education %}
+    <h2>Professional Experience</h2>
+    {% for education in page.header.education %}
+      {% include 'partials/resume/education.html.twig' %}
+    {% endfor %}
+  {% endif %}
 </div>
 {% endblock %}
