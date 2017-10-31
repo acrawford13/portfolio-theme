@@ -1,7 +1,7 @@
 {% extends 'partials/base.html.twig' %}
 {% block javascripts %}
   {{ parent() }}
-  {% do assets.addJs('theme://js/script2.js', {'priority': 99, 'group':'bottom'}) %}
+  {% do assets.addJs('theme://dist/js/script2.js', {'priority': 99, 'group':'bottom'}) %}
 {% endblock %}
 {% block body %}
   <canvas id="canvas" width="650" height="650"></canvas>

@@ -1,0 +1,30 @@
+{
+  "name": "folio-grav-theme",
+  "version": "0.0.1",
+  "description": "Grav theme for personal portfolio",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acrawford13/portfolio-theme.git"
+  },
+  "keywords": [
+    "grav",
+    "theme"
+  ],
+  "author": "Andrea Crawford",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/acrawford13/portfolio-theme/issues"
+  },
+  "homepage": "https://github.com/acrawford13/portfolio-theme#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-processhtml": "^0.4.1"
+  }
+}
