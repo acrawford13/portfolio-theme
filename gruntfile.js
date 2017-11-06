@@ -7,7 +7,7 @@ module.exports = function(grunt){
           style: 'expanded'
         },
         files: {
-          'css-compiled/style.css':'scss/style.scss'
+          'css/style.css':'src/scss/style.scss'
         }
       },
       build: {
@@ -15,7 +15,7 @@ module.exports = function(grunt){
           style: 'compressed'
         },
         files: {
-          'css-compiled/style.css':'scss/style.scss'
+          'css/style.css':'src/scss/style.scss'
         }
       }
     },
@@ -34,31 +34,57 @@ module.exports = function(grunt){
     processhtml: {
       build: {
         files: {
-          'templates/partials/base.html.twig': ['templates/dev/base.html.twig']
+          'templates/partials/base.html.twig': ['templates/partials/base.html.twig']
         }
       },
       dev: {
         files: {
-          'templates/partials/base.html.twig': ['templates/dev/base.html.twig']
+          'templates/partials/base.html.twig': ['templates/partials/base.html.twig']
         }
       },
     },
     watch: {
       css: {
-        files: 'scss/*.scss',
+        files: 'src/scss/*.scss',
         tasks: ['sass:dev'],
         options: {
           livereload: true,
           atBegin: true,
         }
       },
+    },
+    copy: {
+        main: {
+            files: [
+                {
+                    cwd: 'node_modules',
+                    src: ['bulma/css/bulma.css*', 'font-awesome/css/font-awesome.css*'],
+                    dest: 'css/vendor/',
+                    expand: true,
+                    flatten: true,
+                },
+                {
+                    cwd: 'node_modules/font-awesome/fonts',
+                    src: ['*'],
+                    dest: 'fonts',
+                    expand: true,
+                },
+                {
+                    cwd: 'src',
+                    src: ['fonts/**', 'images/**', 'js/**', 'templates/**'],
+                    dest: '.',
+                    expand: true,
+                }
+            ]
+        }
     }
   });
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-processhtml');
   grunt.loadNpmTasks('grunt-contrib-jshint');
 
-  grunt.registerTask('build', ['processhtml:build','sass:build']);
-  grunt.registerTask('dev', ['processhtml:dev']);
+  grunt.registerTask('build', ['copy','processhtml:build','sass:build']);
+  grunt.registerTask('dev', ['copy', 'sass:dev', 'processhtml:dev']);
 };
