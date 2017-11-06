@@ -1,12 +1,11 @@
 {% extends 'partials/base.html.twig' %}
 {% block javascripts %}
   {{ parent() }}
-  {% do assets.addJs('theme://js/script3.js', {'priority': 99, 'group':'bottom'}) %}
+  {% do assets.addJs('theme://js/background.js', {'priority': 99, 'group':'bottom'}) %}
 {% endblock %}
 {% block body_classes %}h-hide-overflow{% endblock %}
 {% block body %}
 <div class="c-container c-container--hide-overflow">
-  <canvas id="canvas" width="650" height="650"></canvas>
   <a class="c-site-identity c-site-identity--homepage hide-for-small" href="{{ home_url }}">Andrea Crawford</a>
   <div id="smallmenu" class="show-for-small">
     <a href="/">

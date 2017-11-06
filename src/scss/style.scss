@@ -23,6 +23,8 @@ body {
   position: absolute;
   height: 100%;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -376,7 +378,7 @@ img {
 @media screen and (max-width: 600px){
 
   canvas {
-    display: none;
+    // display: none;
   }
 
   .c-container {
