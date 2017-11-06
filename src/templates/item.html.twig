@@ -1,0 +1,19 @@
+{% extends 'partials/insidepage.html.twig' %}
+{% block content %}
+<h2 class="c-folio-item__title">{{ page.header.title }}</h2>
+<h3 class="c-folio-item__subtitle">{{ page.taxonomy.tag|join('/') }}, {{ page.date|date('Y') }}</h3>
+<div class="h-flex h-flex--space-between">
+{% if page.prevSibling() %}
+<div class="c-navigation c-navigation--prev">
+Previous:<br/>
+« <a class="c-navigation__link c-navigation__link--prev" href="{{ page.prevSibling().url }}">{{ page.prevSibling().title }}</a>
+</div>
+{% endif %}
+{% if page.nextSibling() %}
+<div class="c-navigation c-navigation--next">
+Next:<br/>
+<a class="c-navigation__link c-navigation__link--next" href="{{ page.nextSibling().url }}">{{ page.nextSibling().title }}</a> »
+</div>
+{% endif %}
+</div>
+{% endblock %}
