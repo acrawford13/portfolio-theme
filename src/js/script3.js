@@ -19,9 +19,7 @@ var mouseY = 0;
 canvas.width = cw;
 canvas.height = ch;
 
-//var gapSize = 20;
 var gapSize = 30;
-//var lineLength = gapSize/3;
 var lineLength = 10;
 var angle = Math.PI/10;
 
@@ -41,10 +39,6 @@ var hd = Math.floor(gridH/2);
 var nameRect = {'corners':[[1,hd-4],[1,hd],[20,hd],[20,hd-4]],'color':'rgba(255,0,0,0.8)'};
 var shapeArray = [nameRect];
 var fadeClick = 1;
-
-/*var gR = function(){
-    return Math.floor((Math.random()*gridW*2)-(gridW/2));
-};*/
 
 var gR = function(howrandom){
     return Math.floor(Math.random()*howrandom);
@@ -78,7 +72,6 @@ var canvasMove = function(){
     shapeArray.push({'corners':[[gridW+1,-1],[gridW-5,-1],[gridW-5,gridH+1],[gridW+1,gridH+1]],'color':'rgba(255,10,16,0.6)'});
     shapeArray.push({'corners':[[4,hd],[2,hd+2],[4,hd+4]],'color':'rgba(255,42,30,0.9)'});
     shapeArray.push({'corners':[[gridW-4,hd],[gridW-2,hd+2],[gridW-4,hd+4]],'color':'rgba(255,255,255,0.9)'});
-    //shapeArray.push({'corners':[[Math.floor(Math.random()*gridW),Math.floor(Math.random()*gridW)],[Math.floor(Math.random()*gridW),Math.floor(Math.random()*gridW)],[Math.floor(Math.random()*gridW),Math.floor(Math.random()*gridW)]],'color':'rgba(253,'+Math.floor(Math.random()*255)+',19,0.4)'});
 };
 
 
@@ -92,10 +85,8 @@ var makeCircles = function(){
         angle=Math.atan2(j-mouseY,i-mouseX);
         c.beginPath();
         c.arc(i-(lineLength*Math.cos(angle)),j-(lineLength*Math.sin(angle)),0.25,0,Math.PI*2);
-        //var ij = Math.hypot(i-mouseX,j-mouseY);
         //support ie:
         var ij = Math.sqrt(Math.pow(i-mouseX,2),Math.pow(j-mouseY,2));
-        //var cwch = Math.hypot(cw,ch);
         //support ie:
         var cwch = Math.sqrt(Math.pow(cw,2),Math.pow(ch,2));
         var fade = Math.floor(255-(255/(cwch/ij)));
@@ -108,15 +99,12 @@ var makeCircles = function(){
 
 
         for(var k=0;k<shapeArray.length;k++){
-            //var goodPath = new Path2D();
             var secPath = [];
             for(var l=0;l<shapeArray[k].corners.length;l++){
-            /*goodPath.lineTo((shapeArray[k].corners[l][0]*gapSize)-(lineLength*Math.cos(Math.atan2((shapeArray[k].corners[l][1]*gapSize)-mouseY,(shapeArray[k].corners[l][0]*gapSize)-mouseX))),(shapeArray[k].corners[l][1]*gapSize)-(lineLength*Math.sin(Math.atan2((shapeArray[k].corners[l][1]*gapSize)-mouseY,(shapeArray[k].corners[l][0]*gapSize)-mouseX))));*/
             secPath.push([((shapeArray[k].corners[l][0]*gapSize)-(lineLength*Math.cos(Math.atan2((shapeArray[k].corners[l][1]*gapSize)-mouseY,(shapeArray[k].corners[l][0]*gapSize)-mouseX)))),((shapeArray[k].corners[l][1]*gapSize)-(lineLength*Math.sin(Math.atan2((shapeArray[k].corners[l][1]*gapSize)-mouseY,(shapeArray[k].corners[l][0]*gapSize)-mouseX))))]);
             }
     c.lineWidth=1;
     c.fillStyle=shapeArray[k].color;
-    //c.fill(goodPath);
     c.beginPath();
     c.moveTo(secPath[0][0],secPath[0][1]);
     for (var m=1;m<secPath.length;m++) {
@@ -140,7 +128,6 @@ var contact = function(){
     //$('#content').show();
 };
 
-//$('#content').css({'margin-top':ch});
 
 var checks = function(){
     if($('#selectmenu').find('input[type=checkbox]:checked').length==0){
@@ -169,7 +156,6 @@ var init = function(){
     $('#content').hide();
 };
 
-//$('#folio-thumbs').height(ch/1.25);
 init();
 
 $("#filter").click(function(){
@@ -190,7 +176,6 @@ var evenSpan = function(classSelect){
       var span = selectedArray[i];
       var oldWidth = selectedArray[i].getBoundingClientRect().width;
       var newWidth = Math.ceil(oldWidth/gapSize)*gapSize;
-      console.log(oldWidth + "//" + newWidth);
       span.style.width = newWidth-20 + 'px';
   }
 };
@@ -206,9 +191,12 @@ document.onmousemove = (function(e){
 });
 
 $(window).resize(function(){
-cw = window.innerWidth;
-ch = window.innerHeight;
-canvas.width = cw;
-canvas.height = ch;
-makeCircles();
+    cw = window.innerWidth;
+    ch = window.innerHeight;
+    canvas.width = cw;
+    canvas.height = ch;
+    gridH = Math.floor((ch)/gapSize);
+    hd = Math.floor(gridH/2);
+    shapeArray[0].corners = [[1,hd-4],[1,hd],[20,hd],[20,hd-4]];
+    makeCircles();
 });
