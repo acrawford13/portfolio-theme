@@ -11,6 +11,8 @@ class Grid {
     constructor(id, size, angle, lineLength) {
         this.id = id;
         this.shapes = [];
+        this.breakpoints = [];
+        this.currentBreakpoint = 0;
         this.mouseX = 0;
         this.mouseY = 0;
         this.pixDensity = 2;
@@ -41,15 +43,27 @@ class Grid {
         });
     }
 
+    makeBreakpoints(){
+        for(var i=0; i<this.breakpoints.length; i++){
+            if(this.breakpoints[i].size < this.width/this.pixDensity){
+                this.currentBreakpoint = this.breakpoints[i].size;
+                this.shapes = this.breakpoints[i].shapes;
+            } else {
+                return;
+            }
+        }
+    }
+
     resize(){
         this.width = window.innerWidth*2;
         this.height = window.innerHeight*2;
         this.element.width = this.width;
         this.element.height = this.height;
+        this.makeBreakpoints();
     }
 
     scale(x){
-        return Math.round((x*this.pixDensity)/this.size);
+        return Math.floor((x*this.pixDensity)/this.size);
     }
 
     calc(object){
@@ -59,9 +73,14 @@ class Grid {
         return object;
     }
 
-    addShape(shape){
-        this.shapes.push(shape);
-        this.drawGrid();
+    addBreakpoint(settings){
+        var object = {};
+        for(var key in settings){
+            object[key] = settings[key];
+        }
+        this.breakpoints.push(object);
+        this.breakpoints = this.breakpoints.sort(function(a,b){return a.size - b.size});
+        this.makeBreakpoints();
     }
 
     drawGrid() {
@@ -91,13 +110,14 @@ class Grid {
             }
         }
 
-        for(var k=0;k<this.shapes.length;k++){
+        // draw shapes
+
+        for(var k=0; k<this.shapes.length; k++){
             var secPath = [];
             for(var l=0;l<this.shapes[k].corners.length;l++){
                 var shape = this.shapes[k];
-                shape.corners[l][0] = this.calc(shape.corners[l][0]);
-                shape.corners[l][1] = this.calc(shape.corners[l][1]);
-                secPath.push([((start.x+shape.corners[l][0]*this.size)-(this.lineLength*Math.cos(Math.atan2((shape.corners[l][1]*this.size)-this.mouseY,(shape.corners[l][0]*this.size)-this.mouseX)))),((shape.corners[l][1]*this.size)-(this.lineLength*Math.sin(Math.atan2((shape.corners[l][1]*this.size)-this.mouseY,(shape.corners[l][0]*this.size)-this.mouseX))))]);
+                var corners = [this.calc(shape.corners[l][0]), this.calc(shape.corners[l][1])];
+                secPath.push([((start.x+corners[0]*this.size)-(this.lineLength*Math.cos(Math.atan2((corners[1]*this.size)-this.mouseY,(corners[0]*this.size)-this.mouseX)))),((corners[1]*this.size)-(this.lineLength*Math.sin(Math.atan2((corners[1]*this.size)-this.mouseY,(corners[0]*this.size)-this.mouseX))))]);
             }
 
             c.fillStyle=shape.color;
@@ -119,5 +139,20 @@ class Shape {
         for (var key in settings){
             this[key] = settings[key];
         }
+    }
+}
+
+class Breakpoint {
+    constructor(size){
+        this.size = size;
+        this.shapes = [];
+    }
+
+    addShape(shape){
+        this.shapes.push(shape);
+    }
+
+    removeShapes(){
+        this.shapes = [];
     }
 }
