@@ -390,7 +390,7 @@ img {
             display: flex;
             width: 100%;
             justify-content: space-between;
-            
+
             li a span {
                 padding: 0.25rem;
                 box-shadow: 0 0 5px 4px white;
@@ -408,6 +408,18 @@ img {
 
   .c-sidebar {
     display: none;
+  }
+
+  .c-folio-item {
+      &__title {
+          text-align: center;
+      }
+
+      &__subtitle {
+          text-align: center;
+          font-size: 0.9rem;
+          margin-top: 0.25rem;
+      }
   }
 
 }
