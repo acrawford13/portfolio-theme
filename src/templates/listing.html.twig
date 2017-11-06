@@ -1,0 +1,40 @@
+{% extends 'partials/insidepage.html.twig' %}
+{% block sidebar %}
+  {% if page.header.custom_menu %}
+  <div class="c-sidebar-menu">
+    <h3 class="c-sidebar-menu__header">{{ page.header.custom_menu.header }}</h3>
+    <ul class="c-sidebar-menu__list">
+    {% for item in page.header.custom_menu.items %}
+      {% if taxonomy.findTaxonomy({'tag':item})|length>0 %}
+        {% set tag = item|join('*')|replace(' ','-')|replace('*',' ')|lower %}
+        <input class="c-sidebar-menu__checkbox" type="radio" id="{{ tag }}" value="{{ tag }}" name="tag" />
+        <label class="c-sidebar-menu__list-item" for="{{ tag }}">{{ item }}</label>
+      {% endif %}
+    {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+{% endblock %}
+{% block content %}
+  {{ page.content }}
+  {% for item in page.collection %}
+    {% include 'partials/folioitem.html.twig' %}
+  {% endfor %}
+{% endblock %}
+{% block footer_scripts %}
+<script>
+$('input[name="tag"]').change(function(){
+  var selected = $('input[name="tag"]:checked');
+  if (selected.length) {
+    $('.c-folio-item').hide();
+    $.each($('input[name="tag"]:checked'), function(i,d){
+      $('.c-folio-item.' + d.value).show();
+    });
+  } else {
+    $('.c-folio-item').show();
+  }
+})
+
+
+</script>
+{% endblock %}

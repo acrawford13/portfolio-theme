@@ -6,4 +6,9 @@ images
 fonts
 css
 templates
+!src/js
+!src/images
+!src/fonts
+!src/css
+!src/templates
 .sass-lint.yml
