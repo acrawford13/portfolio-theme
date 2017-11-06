@@ -1,9 +1,9 @@
 <ul class="c-menu {{ classes }}">
-    {% for mitem in site.menu %}
-        <li>
-            <a href="{{ site.url }}{{ mitem.url }}">
-                <span>{% if mitem.icon %}<i class="fa fa-{{ mitem.icon }}"></i>{% endif %}
-                {{ mitem.text }}</span>
+    {% for p in pages.children.visible %}
+        <li class="c-menu-item {{ p.active ? 'c-menu-item--selected' : '' }}">
+            <a href="{{ site.url }}{{ p.url }}">
+                <span>{% if p.icon %}<i class="fa fa-{{ p.icon }}"></i>{% endif %}
+                {{ p.menu }}</span>
             </a>
         </li>
     {% endfor %}
