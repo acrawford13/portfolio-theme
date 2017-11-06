@@ -5,6 +5,10 @@ $primary-color: #ff3333;
 $primary-font-stack: Montserrat, sans-serif;
 $secondary-font-stack: Roboto, sans-serif;
 
+* {
+    box-sizing: border-box;
+}
+
 h1,
 h2,
 h3,
@@ -377,9 +381,23 @@ img {
 
 @media screen and (max-width: 600px){
 
-  canvas {
-    // display: none;
-  }
+    .c-menu {
+        &--homepage {
+            top: auto;
+            bottom: 1rem;
+            left: auto;
+            background: none;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            
+            li a span {
+                padding: 0.25rem;
+                box-shadow: 0 0 5px 4px white;
+                background-color: white;
+            }
+        }
+    }
 
   .c-container {
     &--sidebar {

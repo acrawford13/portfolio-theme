@@ -33,4 +33,11 @@ for(var i=0;i<6;i++){
     full.addShape({'corners':[[random(),random()],[random(),random()],[random(),random()]],'color':'rgba(0,0,0,0.5)'});
 }
 
+for(var i=0;i<6;i++){
+    var randomPoint = function(){
+        return [{perc: Math.random(), offset: 0, dimension: 'width'}, {perc: Math.random()/2 + 0.2, offset: 0, dimension: 'height'}]
+    };
+    mobile.addShape({'corners':[randomPoint(), randomPoint(), randomPoint()],'color':'rgba(0,0,0,0.5)'});
+}
+
 bg.drawGrid();
