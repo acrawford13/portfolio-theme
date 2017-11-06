@@ -1,6 +1,7 @@
 {% extends 'partials/base.html.twig' %}
 {% block javascripts %}
   {{ parent() }}
+  {% do assets.addJs('theme://js/app.js', {'priority': 100, 'group':'bottom'}) %}
   {% do assets.addJs('theme://js/background.js', {'priority': 99, 'group':'bottom'}) %}
 {% endblock %}
 {% block body_classes %}h-hide-overflow{% endblock %}
