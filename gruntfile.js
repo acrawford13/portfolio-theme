@@ -45,8 +45,8 @@ module.exports = function(grunt){
     },
     watch: {
       css: {
-        files: 'src/scss/*.scss',
-        tasks: ['sass:dev'],
+        files: 'src/**/*',
+        tasks: ['copy','sass:dev'],
         options: {
           livereload: true,
           atBegin: true,
@@ -85,6 +85,6 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-processhtml');
   grunt.loadNpmTasks('grunt-contrib-jshint');
 
-  grunt.registerTask('build', ['copy','processhtml:build','sass:build']);
+  grunt.registerTask('build', ['copy', 'processhtml:build','sass:build']);
   grunt.registerTask('dev', ['copy', 'sass:dev', 'processhtml:dev']);
 };
