@@ -1,0 +1,11 @@
+<div class="c-resume__header">
+    <div class="c-resume__details">
+        <h1>Andrea Crawford</h1>
+        <p><strong>Location:</strong> {{ page.header.details.location }}</p>
+    </div>
+    <div class="c-resume__contact">
+        {% for link in page.header.links %}
+            <a href="{{ link.url }}"><i class="fa {{ link.icon }}"></i></a>
+        {% endfor %}
+    </div>
+</div>

@@ -11,6 +11,7 @@ window.requestAnimFrame = (function(){
 class Grid {
     constructor(opts) {
         this.id = opts.id;
+        this.class = opts.class;
         this.height = opts.height;
         this.showGrid = opts.showGrid;
         this.pixDensity = 2;
@@ -141,6 +142,7 @@ class Background extends Grid {
         var canvas = $('<canvas></canvas>');
         canvas.attr('id',this.id);
         canvas.css({'width':'100%'});
+        canvas.addClass(this.class);
         $('body').prepend(canvas);
         this.element = document.getElementById(this.id);
         this.context = this.element.getContext('2d');
@@ -196,6 +198,7 @@ class Logo extends Grid {
         canvas.attr('id',this.id);
         canvas.css({'width':'100%'});
         canvas.addClass('c-logo-canvas');
+        canvas.addClass(this.class);
         $('body').prepend(canvas);
         this.element = document.getElementById(this.id);
         this.context = this.element.getContext('2d');

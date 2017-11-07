@@ -588,3 +588,18 @@ img {
       }
   }
 }
+
+@media print {
+    .c-sidebar, canvas {
+        display: none;
+    }
+
+    .h-show-for-print {
+        display: initial !important;
+    }
+
+    .c-container--sidebar {
+        width: 100%;
+        margin-left: 0;
+    }
+}
