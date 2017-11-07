@@ -190,10 +190,10 @@ class Logo extends Grid {
         var canvas = $('<canvas></canvas>');
         canvas.attr('id',this.id);
         canvas.css({'width':'100%'});
+        canvas.addClass('c-logo-canvas');
         $('body').prepend(canvas);
         this.element = document.getElementById(this.id);
         this.context = this.element.getContext('2d');
-        canvas.className = 'c-logo-canvas';
         this.resize();
         this.drawGrid();
         var self = this;
