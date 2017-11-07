@@ -5,7 +5,7 @@
     </div>
     <div class="c-resume__contact">
         {% for link in page.header.links %}
-            <a href="{{ link.url }}"><i class="fa {{ link.icon }}"></i></a>
+            <a target="{{ link.target }}" href="{{ link.url }}"><i class="fa {{ link.icon }}"></i></a>
         {% endfor %}
     </div>
 </div>
