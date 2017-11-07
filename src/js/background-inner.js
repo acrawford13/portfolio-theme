@@ -9,7 +9,7 @@ var nameBox = new Shape({
 
 
 var mobile = new Breakpoint(0);
-var medium = new Breakpoint(480);
+var medium = new Breakpoint(640);
 var full = new Breakpoint(1024);
 bg.addBreakpoint(full);
 bg.addBreakpoint(medium);

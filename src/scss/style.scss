@@ -257,6 +257,10 @@ canvas {
     padding-bottom: 0;
     font-size: 1.5rem;
   }
+
+  &--header {
+      display: none;
+  }
 }
 
 .c-sidebar {
@@ -408,6 +412,32 @@ img {
     }
 }
 
+@media screen and (max-width: 640px){
+    .c-site-identity {
+        &--header {
+            display: block;
+            width: 200px;
+            font-size: 1.5rem;
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+        }
+
+        &--sidebar {
+            display: none;
+        }
+    }
+
+    .c-sidebar {
+        padding-top: 1rem;
+    }
+
+    .c-logo-canvas {
+        display: block;
+        position: relative;
+    }
+}
+
 @media screen and (max-width: 480px){
 
     .c-site-identity {
@@ -420,11 +450,10 @@ img {
             width: 200px;
             display: block;
         }
-    }
 
-    .c-logo-canvas {
-        display: block;
-        position: relative;
+        &--header {
+            display: none;
+        }
     }
 
     .c-menu {
