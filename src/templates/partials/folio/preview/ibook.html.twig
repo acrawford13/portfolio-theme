@@ -1,0 +1,9 @@
+<div class="h-flex">
+  <div style="width: 66.5%">
+    {{ item.media[item.header.featured_image[0]].html() }}
+  </div>
+  <div style="width: 32.5%; margin-left: 6px" class="h-flex h-flex--vertical">
+    <div style="margin-bottom: 2px">{{ item.media[item.header.featured_image[1]].html() }}</div>
+    <div>{{ item.media[item.header.featured_image[2]].html() }}</div>
+  </div>
+</div>

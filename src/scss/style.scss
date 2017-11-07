@@ -100,6 +100,15 @@ canvas {
   }
 }
 
+.c-single-item {
+    &__images {
+        display: flex;
+        justify-content: center;
+        margin-left: -0.25rem;
+        margin-right: -0.25rem;
+    }
+}
+
 .c-folio-item {
   background-color: rgba(255,255,255,0.7);
   padding: 1rem;
@@ -117,6 +126,7 @@ canvas {
   &__title {
     color: $primary-color;
     margin-bottom: 0;
+    margin-top: 0;
     font-weight: 700;
   }
 
@@ -376,7 +386,7 @@ canvas {
 
   &__contact {
       margin-left: 1rem;
-      
+
       i {
           $size: 3rem;
           font-size: 1.5rem;
@@ -618,16 +628,24 @@ img {
     }
   }
 
-  .c-sidebar-menu {
-    display: none;
+  .c-filter {
+      max-width: 100%;
   }
 
   .c-sidebar {
-      display: none;
+      position: relative;
+      width: 100%;
+      padding: 1rem;
+  }
+
+  .c-navigation-footer {
+      margin-top: 4rem;
+      margin-bottom: 1rem;
+      flex-direction: column;
   }
 
   .c-folio-item {
-      &__title {
+      &__title, &__subheading {
           text-align: center;
       }
 
@@ -635,6 +653,32 @@ img {
           text-align: center;
           font-size: 0.9rem;
           margin-top: 0.25rem;
+      }
+  }
+
+  .c-single-item {
+      &__images {
+          flex-direction: column;
+      }
+
+      &__image {
+          max-height: 100vh;
+          text-align: center;
+          margin-bottom: 1rem;
+
+          img {
+              max-height: inherit;
+          }
+      }
+  }
+
+  .h-flex {
+      &--mobile {
+          flex-direction: column;
+
+          div {
+              width: 100% !important;
+          }
       }
   }
 }
