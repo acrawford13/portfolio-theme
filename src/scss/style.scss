@@ -94,7 +94,7 @@ canvas {
 
 .c-container {
   &--sidebar {
-    width: 72%;
+    width: 70%;
     margin-left: 28%;
     position: relative;
   }
@@ -107,6 +107,12 @@ canvas {
   text-decoration: none;
   color: #222;
   display: block;
+
+  &__description {
+      &--mobile {
+          display: none;
+      }
+  }
 
   &__title {
     color: $primary-color;
@@ -124,6 +130,7 @@ canvas {
   }
 
   &__images {
+      width: 100%;
 
     &--grid {
       display: grid;
@@ -277,6 +284,8 @@ canvas {
     color: $primary-color;
     font-weight: bold;
     outline: none;
+    width: 100%;
+    max-width: 160px;
 
     .c-filter__option {
         color: #222;
@@ -340,6 +349,10 @@ canvas {
       }
     }
   }
+
+  &--header {
+      display: none;
+  }
 }
 
 .c-resume {
@@ -362,6 +375,8 @@ canvas {
   }
 
   &__contact {
+      margin-left: 1rem;
+      
       i {
           $size: 3rem;
           font-size: 1.5rem;
@@ -373,6 +388,7 @@ canvas {
           background-color: $primary-color;
           color: white;
           border-radius: 50%;
+          margin: 0.25rem;
       }
   }
 
@@ -441,9 +457,6 @@ img {
 }
 
 @media screen and (max-width: 1200px){
-    .c-sidebar {
-        width: 200px;
-    }
     .c-menu {
         &--sidebar {
             margin-top: 1rem;
@@ -474,14 +487,20 @@ img {
 }
 
 @media screen and (max-width: 800px){
+    .c-header {
+        position: absolute;
+        top: 1rem;
+        left: 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        width: 100%;
+    }
+
     .c-site-identity {
         &--header {
             display: block;
             width: 200px;
             font-size: 1.5rem;
-            position: absolute;
-            top: 1rem;
-            left: 1.5rem;
         }
 
         &--sidebar {
@@ -507,6 +526,18 @@ img {
             margin-bottom: 1rem;
         }
     }
+
+    .c-folio-item {
+        &__description {
+            &--mobile {
+                display: block;
+            }
+
+            &--desktop {
+                display: none;
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 480px){
@@ -517,12 +548,12 @@ img {
             left: 0;
         }
 
-        &--sidebar {
+        &--header {
             width: 200px;
             display: block;
         }
 
-        &--header {
+        &--sidebar {
             display: none;
         }
     }
@@ -544,14 +575,38 @@ img {
             }
         }
 
-        &--sidebar {
+        &--header {
+            margin-top: 1rem;
             background-color: rgba(255, 255, 255, 0.8);
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
+            padding: 0;
 
-            li a {
-                padding: 0.5rem;
+            .c-menu__item {
+                display: block;
+                padding: 0;
+
+                a {
+                    color: rgba(0,0,0,0.9);
+                    padding: 1rem 0.5rem;
+                    display: inline-block;
+                    font-weight: bold;
+
+                    &:hover {
+                        color: initial;
+                    }
+                }
+
+                &--selected {
+                    a {
+                        color: $primary-color;
+                    }
+                }
             }
+        }
+
+        &--sidebar {
+            display: none;
         }
     }
 
@@ -568,12 +623,7 @@ img {
   }
 
   .c-sidebar {
-      position: absolute;
-      top: 0;
-      padding-top: 1rem;
-      width: 100%;
-      padding-left: 1rem;
-      padding-right: 1rem;
+      display: none;
   }
 
   .c-folio-item {

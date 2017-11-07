@@ -2,8 +2,8 @@
 <a href="{{ item.url }}" class="c-folio-item {{ item.taxonomy.tag|join('*')|replace(' ','-')|replace('*',' ')|lower }}">
   <h2 class="c-folio-item__title">{{ item.header.title }}</h2>
   <h3 class="c-folio-item__subtitle">{{ item.taxonomy.tag|join('/') }}, {{ item.date|date('Y') }}</h3>
-  {% if item.header.template %}
-    {% include item.header.template %}
+  {% if item.header.preview_template %}
+    {% include item.header.preview_template %}
   {% else %}
   <div class="c-folio-item__images">
     {% if item.header.featured_image %}
@@ -26,7 +26,6 @@
   </div>
   {% endif %}
   <div class="c-folio-item__content">
-    <p class="c-folio-item__description">{{ item.header.description }}</p>
     {% if item.header.skills %}
     <ul class="c-skill-list">
       {% for skill in item.header.skills %}

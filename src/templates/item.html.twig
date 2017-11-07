@@ -1,21 +1,47 @@
 {% extends 'partials/insidepage.html.twig' %}
 
 {% block sidebar %}
+<div class="c-folio-item__description c-folio-item__description--desktop">
+    {% if page.header.skills or page.header.description %}<h3>About this project</h3>{% endif %}
     {{ page.header.description }}
+      {% if page.header.skills %}
+      <ul class="c-skill-list">
+        {% for skill in page.header.skills %}
+        <li class="c-skill-list__item">{{ skill }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+  </div>
 {% endblock %}
 {% block content %}
     <h2 class="c-folio-item__title">{{ page.header.title }}</h2>
     <h3 class="c-folio-item__subtitle">{{ page.taxonomy.tag|join('/') }}, {{ page.date|date('Y') }}</h3>
     {% if page.header.full_template %}
         {% include page.header.full_template %}
+    {% elseif page.header.preview_template %}
+        {% set item = page %}
+        {% include page.header.preview_template %}
     {% else %}
-    <div>
         {% set images = page.header.images ? page.header.images : page.header.featured_image %}
-        {% for image in images %}
-            {{ page.media[image].html() }}
-        {% endfor %}
-    </div>
+        <div class="c-folio-item__images">
+          {% for image in images %}
+            <div class="c-folio-item__image">
+              {{ page.media[image].html() }}
+            </div>
+          {% endfor %}
+        </div>
     {% endif %}
+    <div class="c-folio-item__description c-folio-item__description--mobile">
+        {% if page.header.skills or page.header.description %}<h3>About this project</h3>{% endif %}
+        {{ page.header.description }}
+          {% if page.header.skills %}
+          <ul class="c-skill-list">
+            {% for skill in page.header.skills %}
+            <li class="c-skill-list__item">{{ skill }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+      </div>
     <div class="h-flex h-flex--space-between">
         {% if page.prevSibling() %}
             <div class="c-navigation c-navigation--prev">
