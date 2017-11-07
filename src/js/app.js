@@ -1,3 +1,4 @@
+
 window.requestAnimFrame = (function(){
   return  window.requestAnimationFrame       ||
           window.webkitRequestAnimationFrame ||
@@ -40,7 +41,6 @@ class Grid {
 
     calc(object){
         if (typeof(object) === 'object'){
-            console.log(this.scale(object.perc * this[object.dimension]/this.pixDensity) + object.offset);
             return this.scale(object.perc * this[object.dimension]/this.pixDensity) + object.offset;
         }
         return object;
@@ -138,12 +138,11 @@ class Background extends Grid {
     }
 
     init(){
-        // console.log(super.id);
-        var canvas = document.createElement('canvas');
-        canvas.id = this.id;
-        canvas.style = "width: 100%";
-        document.getElementsByTagName('body')[0].prepend(canvas);
-        this.element = document.getElementById(canvas.id);
+        var canvas = $('<canvas></canvas>');
+        canvas.attr('id',this.id);
+        canvas.css({'width':'100%'});
+        $('body').prepend(canvas);
+        this.element = document.getElementById(this.id);
         this.context = this.element.getContext('2d');
         this.resize();
         this.drawGrid();
@@ -188,11 +187,11 @@ class Logo extends Grid {
     }
 
     init(){
-        var canvas = document.createElement('canvas');
-        canvas.id = this.id;
-        canvas.style = "width: 100%";
-        document.getElementsByTagName('body')[0].prepend(canvas);
-        this.element = document.getElementById(canvas.id);
+        var canvas = $('<canvas></canvas>');
+        canvas.attr('id',this.id);
+        canvas.css({'width':'100%'});
+        $('body').prepend(canvas);
+        this.element = document.getElementById(this.id);
         this.context = this.element.getContext('2d');
         canvas.className = 'c-logo-canvas';
         this.resize();
