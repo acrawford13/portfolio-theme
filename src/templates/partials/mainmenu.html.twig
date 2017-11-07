@@ -1,6 +1,6 @@
 <ul class="c-menu {{ classes }}">
     {% for p in pages.children.visible %}
-        <li class="c-menu-item {{ p.active ? 'c-menu-item--selected' : '' }}">
+        <li class="c-menu__item {{ p.active ? 'c-menu__item--selected' : '' }}">
             <a href="{{ site.url }}{{ p.url }}">
                 <span>{% if p.icon %}<i class="fa fa-{{ p.icon }}"></i>{% endif %}
                 {{ p.menu }}</span>
