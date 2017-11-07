@@ -3,7 +3,17 @@
   {% if page.header.custom_menu %}
   <div class="c-sidebar-menu">
     <h3 class="c-sidebar-menu__header">{{ page.header.custom_menu.header }}</h3>
-    <ul class="c-sidebar-menu__list">
+    {% if page.header.custom_menu %}
+    <select class="c-filter c-filter--sidebar"><option class="c-filter__option--disabled" disabled selected>Filter</option>
+        {% for item in page.header.custom_menu.items %}
+        {% if taxonomy.findTaxonomy({'tag':item})|length>0 %}
+        {% set tag = item|join('*')|replace(' ','-')|replace('*',' ')|lower %}
+            <option class="c-filter__option" value="{{ tag }}">{{ item }}</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+    {% endif %}
+    <!-- <ul class="c-sidebar-menu__list">
     {% for item in page.header.custom_menu.items %}
       {% if taxonomy.findTaxonomy({'tag':item})|length>0 %}
         {% set tag = item|join('*')|replace(' ','-')|replace('*',' ')|lower %}
@@ -11,7 +21,7 @@
         <label class="c-sidebar-menu__list-item" for="{{ tag }}">{{ item }}</label>
       {% endif %}
     {% endfor %}
-    </ul>
+    </ul> -->
   </div>
   {% endif %}
 {% endblock %}
@@ -33,6 +43,13 @@ $('input[name="tag"]').change(function(){
   } else {
     $('.c-folio-item').show();
   }
+})
+
+$('select').change(function(){
+    var selected = $(this).find('option:selected').val();
+    $('.c-folio-item').hide();
+  $('.c-folio-item.' + selected).show();
+
 })
 
 
