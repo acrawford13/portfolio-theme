@@ -271,6 +271,7 @@ canvas {
     font-family: $primary-font-stack;
     color: $primary-color;
     font-weight: bold;
+    outline: none;
 
     .c-filter__option {
         color: #222;
