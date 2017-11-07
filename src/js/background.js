@@ -1,4 +1,4 @@
-var bg = new Grid('canvas', showGrid=true);
+var bg = new Background({id: 'canvas', showGrid: true});
 
 var nameBox = new Shape({
     corners: [

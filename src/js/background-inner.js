@@ -1,3 +1,4 @@
+var logo = new Logo({id: 'logo-canvas', height: 140, showGrid: false});
 var bg = new Background({id: 'canvas', showGrid: true});
 var nameBox = new Shape({
     corners: [
@@ -30,5 +31,3 @@ for(var i=0;i<6;i++){
 }
 
 bg.drawGrid();
-
-var logo = new Logo({id: 'logo-canvas', height: 170, showGrid: false});
