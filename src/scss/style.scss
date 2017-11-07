@@ -383,12 +383,41 @@ img {
     display: none;
 }
 
+@media screen and (max-width: 1024px){
+    .c-menu {
+        &--sidebar {
+            margin-top: 1rem;
+
+            li {
+                display: block;
+                padding: 0;
+
+                a {
+                    color: rgba(0,0,0,0.9);
+                    padding: 0.25rem;
+                    display: inline-block;
+                    font-weight: bold;
+
+                    &:hover {
+                        color: initial;
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 480px){
 
     .c-site-identity {
         &--homepage {
             text-align: center;
             left: 0;
+        }
+
+        &--sidebar {
+            width: 200px;
+            display: block;
         }
     }
 
@@ -413,6 +442,16 @@ img {
                 background-color: white;
             }
         }
+
+        &--sidebar {
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: space-between;
+
+            li a {
+                padding: 0.5rem;
+            }
+        }
     }
 
   .c-container {
@@ -422,8 +461,15 @@ img {
     }
   }
 
-  .c-sidebar {
+  .c-sidebar-menu {
     display: none;
+  }
+
+  .c-sidebar {
+      position: absolute;
+      top: 0;
+      padding-top: 1rem;
+      width: auto;
   }
 
   .c-folio-item {
@@ -437,29 +483,4 @@ img {
           margin-top: 0.25rem;
       }
   }
-
-}
-
-@media screen and (max-width: 1024px){
-    .c-menu {
-        &--sidebar {
-            margin-top: 1rem;
-
-            li {
-                display: block;
-                padding: 0;
-
-                a {
-                    color: rgba(0,0,0,0.9);
-                    padding: 0.25rem;
-                    display: inline-block;
-                    font-weight: bold;
-
-                    &:hover {
-                        color: initial;
-                    }
-                }
-            }
-        }
-    }
 }
