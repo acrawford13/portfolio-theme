@@ -281,13 +281,7 @@ canvas {
 
     a {
       text-decoration: none;
-      color: rgba(0,0,0,0.9);
-    }
-
-    &--selected {
-        a {
-            color: $primary-color;
-        }
+      color: white;
     }
   }
 
@@ -324,6 +318,7 @@ canvas {
 }
 
 .c-resume {
+    padding: 1rem;
   background-color: rgba(255, 255, 255, 0.9);
 
   h2 {
@@ -346,8 +341,7 @@ canvas {
     margin-bottom: 0.25rem;
   }
   &__body {
-    display: grid;
-    grid-template-columns: 130px 1fr;
+    display: flex;
   }
 
   &__employer {
@@ -388,7 +382,10 @@ img {
     display: none;
 }
 
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 1200px){
+    .c-sidebar {
+        width: 200px;
+    }
     .c-menu {
         &--sidebar {
             margin-top: 1rem;
@@ -398,7 +395,7 @@ img {
                 padding: 0;
 
                 a {
-                    // color: rgba(0,0,0,0.9);
+                    color: rgba(0,0,0,0.9);
                     padding: 0.25rem;
                     display: inline-block;
                     font-weight: bold;
@@ -407,12 +404,18 @@ img {
                         color: initial;
                     }
                 }
+
+                &--selected {
+                    a {
+                        color: $primary-color;
+                    }
+                }
             }
         }
     }
 }
 
-@media screen and (max-width: 640px){
+@media screen and (max-width: 800px){
     .c-site-identity {
         &--header {
             display: block;
@@ -435,6 +438,12 @@ img {
     .c-logo-canvas {
         display: block;
         position: relative;
+    }
+
+    .c-job {
+        &__body {
+            flex-direction: column;
+        }
     }
 }
 
@@ -488,6 +497,7 @@ img {
     &--sidebar {
       width: 100%;
       margin-left: 0;
+      padding: 1rem;
     }
   }
 
