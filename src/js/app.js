@@ -147,6 +147,11 @@ class Background extends Grid {
         this.resize();
         this.drawGrid();
         var self = this;
+        document.addEventListener('touchmove', function(e){
+            self.mouseX = e.changedTouches[0].clientX*self.pixDensity;
+            self.mouseY = e.changedTouches[0].clientY*self.pixDensity;
+            self.drawGrid();
+        });
         document.addEventListener('mousemove', function(e){
             self.mouseX = e.clientX*self.pixDensity;
             self.mouseY = e.clientY*self.pixDensity;
@@ -197,6 +202,11 @@ class Logo extends Grid {
         this.resize();
         this.drawGrid();
         var self = this;
+        document.addEventListener('touchmove', function(e){
+            self.mouseX = e.changedTouches[0].clientX*self.pixDensity;
+            self.mouseY = e.changedTouches[0].clientY*self.pixDensity;
+            self.drawGrid();
+        });
         document.addEventListener('mousemove', function(e){
             self.mouseX = e.clientX*self.pixDensity;
             self.mouseY = e.clientY*self.pixDensity;
