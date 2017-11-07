@@ -66,7 +66,7 @@ module.exports = function(grunt){
                 {
                     cwd: 'node_modules/font-awesome/fonts',
                     src: ['*'],
-                    dest: 'fonts',
+                    dest: 'css/fonts',
                     expand: true,
                 },
                 {

@@ -14,8 +14,7 @@
     <link rel="canonical" href="{{ page.url(true, true) }}" />
 
     {% block stylesheets %}
-        {% do assets.addCss('theme://css/bulma.css', 100) %}
-        {% do assets.addCss('theme://css/font-awesome.css', 99) %}
+        {% do assets.addCss('theme://css/vendor/font-awesome.css', 99) %}
         {% do assets.addCss('theme://css/style.css', 98) %}
 
     {% endblock %}

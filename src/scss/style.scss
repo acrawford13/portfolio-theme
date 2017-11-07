@@ -9,6 +9,11 @@ $secondary-font-stack: Roboto, sans-serif;
     box-sizing: border-box;
 }
 
+::selection {
+    background-color: #ababab;
+    color: white;
+}
+
 h1,
 h2,
 h3,
@@ -341,6 +346,36 @@ canvas {
     padding: 1rem;
   background-color: rgba(255, 255, 255, 0.9);
 
+  &__header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h1 {
+          margin-bottom: 0;
+      }
+
+      p {
+          margin-top: 0;
+      }
+  }
+
+  &__contact {
+      i {
+          $size: 3rem;
+          font-size: 1.5rem;
+          display: inline-block;
+          width: $size;
+          height: $size;
+          line-height: $size;
+          text-align: center;
+          background-color: $primary-color;
+          color: white;
+          border-radius: 50%;
+      }
+  }
+
   h2 {
     font-size:1rem;
     text-transform: uppercase;
@@ -355,14 +390,17 @@ canvas {
   }
 }
 
+.c-resume {
+    &__section-title {
+      color: $primary-color;
+      margin-bottom: 0.25rem;
+    }
+    &__section-body {
+        display: flex;
+    }
+}
+
 .c-job {
-  &__title {
-    color: $primary-color;
-    margin-bottom: 0.25rem;
-  }
-  &__body {
-    display: flex;
-  }
 
   &__employer {
     margin: 0;
