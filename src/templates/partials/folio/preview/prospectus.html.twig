@@ -1,14 +1,14 @@
 <div class="h-flex">
-  <div style="width: 68%">
+  <div class="c-grid--small-68">
     {{ item.media[item.header.featured_image[0]].html() }}
   </div>
-  <div style="width: 32%; margin-left: 4px;" class="h-flex h-flex--vertical">
+  <div class="h-flex h-flex--vertical c-grid--small-32">
     <div>{{ item.media[item.header.featured_image[1]].html() }}</div>
     <div>{{ item.media[item.header.featured_image[2]].html() }}</div>
   </div>
 </div>
 <div class="h-flex">
-  <div>{{ item.media[item.header.featured_image[3]].html() }}</div>
-  <div>{{ item.media[item.header.featured_image[4]].html() }}</div>
-  <div>{{ item.media[item.header.featured_image[5]].html() }}</div>
+  <div class="c-grid--small-33">{{ item.media[item.header.featured_image[3]].html() }}</div>
+  <div class="c-grid--small-33">{{ item.media[item.header.featured_image[4]].html() }}</div>
+  <div class="c-grid--small-33">{{ item.media[item.header.featured_image[5]].html() }}</div>
 </div>
