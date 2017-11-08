@@ -2,7 +2,7 @@
 
 {% block sidebar %}
 <div class="c-folio-item__description c-folio-item__description--desktop">
-    {{ page.header.description }}
+    {% if page.header.description %}<strong>{{ page.title }}</strong><br/>{{ page.header.description }}{% endif %}
       {% if page.header.skills %}
       <ul class="c-skill-list">
         {% for skill in page.header.skills %}
