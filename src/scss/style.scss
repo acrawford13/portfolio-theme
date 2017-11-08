@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 $breakpoints: (
-  large: 1024px,
+  large: 1200px,
   medium: 800px,
   small: 480px
 );
@@ -44,6 +44,18 @@ $breakpoints: (
 .c-grid {
     margin-left: -0.25rem;
     margin-right: -0.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    &--center {
+        justify-content: center;
+    }
+
+    &--flex-start {
+        justify-content: flex-start;
+    }
 }
 
 $primary-color: #ff3333;
@@ -149,6 +161,9 @@ canvas {
 }
 
 .c-single-item {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 1rem;
+
     &__images {
         display: flex;
         justify-content: center;
@@ -438,6 +453,7 @@ canvas {
 
   &__contact {
       margin-left: 1rem;
+      text-align: right;
 
       i {
           $size: 3rem;
@@ -468,6 +484,26 @@ canvas {
   }
 }
 
+.c-contact {
+
+      &__contact {
+
+          i {
+              $size: 3rem;
+              font-size: 1.5rem;
+              display: inline-block;
+              width: $size;
+              height: $size;
+              line-height: $size;
+              text-align: center;
+              background-color: $primary-color;
+              color: white;
+              border-radius: 50%;
+              margin: 0.25rem;
+          }
+      }
+}
+
 .c-resume {
     &__section-title {
       color: $primary-color;
@@ -475,6 +511,13 @@ canvas {
     }
     &__section-body {
         display: flex;
+    }
+}
+
+.c-education {
+    &__provider {
+        margin-bottom: 0;
+        margin-top: 0.25rem;
     }
 }
 
@@ -516,6 +559,12 @@ img {
   }
 }
 
+.h-layout--center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .c-logo-canvas {
     display: none;
 }
@@ -534,10 +583,6 @@ img {
                     padding: 0.25rem;
                     display: inline-block;
                     font-weight: bold;
-
-                    &:hover {
-                        color: initial;
-                    }
                 }
 
                 &--selected {

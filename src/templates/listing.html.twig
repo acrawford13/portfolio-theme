@@ -3,13 +3,15 @@
   {% if page.header.custom_menu %}
   <div class="c-sidebar-menu">
     {% if page.header.custom_menu %}
-        <select class="c-filter c-filter--sidebar"><option class="c-filter__option--disabled" disabled selected>Filter projects</option>
+        <select class="c-filter c-filter--sidebar">
+            <option value="none" class="c-filter__option--disabled" disabled selected>Filter projects</option>
             {% for item in page.header.custom_menu.items %}
             {% if taxonomy.findTaxonomy({'tag':item})|length>0 %}
             {% set tag = item|join('*')|replace(' ','-')|replace('*',' ')|lower %}
                 <option class="c-filter__option" value="{{ tag }}">{{ item }}</option>
             {% endif %}
             {% endfor %}
+            <option value="all" class="c-filter__option">Show all projects</option>
         </select>
     {% endif %}
   </div>
@@ -25,8 +27,13 @@
 <script>
     $('select').change(function(){
         var selected = $(this).find('option:selected').val();
-        $('.c-folio-item').hide();
-        $('.c-folio-item.' + selected).show();
+        if(selected == 'all'){
+            $('.c-folio-item').show();
+            $(this).val('none');
+        } else {
+            $('.c-folio-item').hide();
+            $('.c-folio-item.' + selected).show();
+        }
     })
 
 

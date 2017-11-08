@@ -1,14 +1,8 @@
-
-{% extends 'partials/base.html.twig' %}
+{% extends 'partials/insidepage.html.twig' %}
 {% block javascripts %}
   {{ parent() }}
   {% do assets.addJs('theme://js/app.js', {'priority': 100, 'group':'bottom'}) %}
 {% endblock %}
 {% block content %}
   {{ page.content }}
-{% endblock %}
-{% block footer_scripts %}
-<script>
-    var bg = new Background({id: 'background', showGrid: true});
-</script>
 {% endblock %}

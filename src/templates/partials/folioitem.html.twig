@@ -1,7 +1,7 @@
 {% if item.media.images %}
 <a href="{{ item.url }}" class="c-folio-item {{ item.taxonomy.tag|join('*')|replace(' ','-')|replace('*',' ')|lower }}">
   <h2 class="c-folio-item__title">{{ item.header.title }}</h2>
-  <h3 class="c-folio-item__subtitle">{{ item.taxonomy.tag|join('/') }}, {{ item.date|date('Y') }}</h3>
+  <h3 class="c-folio-item__subtitle">{{ item.taxonomy.tag|first }}, {{ item.date|date('Y') }}</h3>
   {% if item.header.preview_template %}
     {% include item.header.preview_template %}
   {% else %}

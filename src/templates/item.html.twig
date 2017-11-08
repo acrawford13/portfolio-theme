@@ -14,7 +14,8 @@
 {% endblock %}
 {% block content %}
     <h2 class="c-folio-item__title">{{ page.header.title }}</h2>
-    <h3 class="c-folio-item__subtitle">{{ page.taxonomy.tag|join('/') }}, {{ page.date|date('Y') }}</h3>
+    <h3 class="c-folio-item__subtitle">{{ page.taxonomy.tag|first }}, {{ page.date|date('Y') }}</h3>
+<div class="c-single-item">
     {% if page.header.full_template %}
         {% set item = page %}
         {% include page.header.full_template %}
@@ -41,18 +42,19 @@
           </ul>
           {% endif %}
       </div>
-    <div class="h-flex h-flex--space-between c-navigation-footer">
-        {% if page.prevSibling().url %}
-            <div class="c-navigation c-navigation--prev">
-            Previous:<br/>
-            « <a class="c-navigation__link c-navigation__link--prev" href="{{ page.prevSibling().url }}">{{ page.prevSibling().title }}</a>
-            </div>
-        {% endif %}
-        {% if page.nextSibling().url %}
-            <div class="c-navigation c-navigation--next">
-            Next:<br/>
-            <a class="c-navigation__link c-navigation__link--next" href="{{ page.nextSibling().url }}">{{ page.nextSibling().title }}</a> »
-            </div>
-        {% endif %}
-    </div>
+</div>
+<div class="h-flex h-flex--space-between c-navigation-footer">
+  {% if page.prevSibling().url %}
+      <div class="c-navigation c-navigation--prev">
+      Previous:<br/>
+      « <a class="c-navigation__link c-navigation__link--prev" href="{{ page.prevSibling().url }}">{{ page.prevSibling().title }}</a>
+      </div>
+  {% endif %}
+  {% if page.nextSibling().url %}
+      <div class="c-navigation c-navigation--next">
+      Next:<br/>
+      <a class="c-navigation__link c-navigation__link--next" href="{{ page.nextSibling().url }}">{{ page.nextSibling().title }}</a> »
+      </div>
+  {% endif %}
+</div>
 {% endblock %}
