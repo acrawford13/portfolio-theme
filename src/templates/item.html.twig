@@ -2,7 +2,6 @@
 
 {% block sidebar %}
 <div class="c-folio-item__description c-folio-item__description--desktop">
-    {% if page.header.skills or page.header.description %}<h3>About this project</h3>{% endif %}
     {{ page.header.description }}
       {% if page.header.skills %}
       <ul class="c-skill-list">
@@ -33,7 +32,6 @@
         </div>
     {% endif %}
     <div class="c-folio-item__description c-folio-item__description--mobile">
-        {% if page.header.skills or page.header.description %}<h3 class="c-folio-item__subheading">About this project</h3>{% endif %}
         {{ page.header.description }}
           {% if page.header.skills %}
           <ul class="c-skill-list">

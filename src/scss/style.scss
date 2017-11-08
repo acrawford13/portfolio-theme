@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+@import '../../node_modules/bulma/sass/base/_all.sass';
+@import '../../node_modules/bulma/sass/grid/columns.sass';
 
 $primary-color: #ff3333;
 $primary-font-stack: Montserrat, sans-serif;
@@ -98,6 +100,9 @@ canvas {
     margin-left: 28%;
     position: relative;
   }
+
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .c-single-item {
@@ -670,6 +675,10 @@ img {
               max-height: inherit;
           }
       }
+  }
+
+  .h-hide-for-mobile {
+      display: none;
   }
 
   .h-flex {
