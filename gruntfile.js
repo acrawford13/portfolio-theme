@@ -1,6 +1,22 @@
 module.exports = function(grunt){
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    babel: {
+      options: {
+        sourceMap: true,
+        presets: ['env']
+      },
+      dist: {
+        files: [
+            {
+                expand: true,
+                cwd: 'src/js/',
+                src: ['*.js'],
+                dest: 'js/'
+            }
+        ]
+      }
+    },
     sass: {
       dev: {
         options: {
@@ -20,7 +36,7 @@ module.exports = function(grunt){
       }
     },
     jshint: {
-      files: ['Gruntfile.js', 'js/*.js'],
+      files: ['Gruntfile.js', 'src/js/*.js'],
       options: {
         // options here to override JSHint defaults
         globals: {
@@ -45,20 +61,27 @@ module.exports = function(grunt){
     },
     watch: {
       css: {
-        files: 'src/**/*',
+        files: 'src/scss/*.scss',
         tasks: ['copy','sass:dev'],
         options: {
           livereload: true,
           atBegin: true,
         }
       },
+      js: {
+        files: 'src/js/*.js',
+        tasks: ['babel','jshint'],
+        options: {
+          atBegin: true,
+        }
+      }
     },
     copy: {
         main: {
             files: [
                 {
                     cwd: 'src',
-                    src: ['images/**', 'js/**', 'templates/**'],
+                    src: ['images/**', 'templates/**'],
                     dest: '.',
                     expand: true,
                 }
@@ -71,7 +94,8 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-processhtml');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-babel');
 
-  grunt.registerTask('build', ['copy', 'processhtml:build','sass:build']);
-  grunt.registerTask('dev', ['copy', 'sass:dev', 'processhtml:dev']);
+  grunt.registerTask('build', ['babel', 'copy', 'processhtml:build','sass:build']);
+  grunt.registerTask('dev', ['babel', 'copy', 'sass:dev', 'processhtml:dev']);
 };
