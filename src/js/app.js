@@ -1,121 +1,231 @@
+/*jshint esversion: 6 */
 
+// requestAnimationFrame polyfill
 window.requestAnimFrame = (function(){
-  return  window.requestAnimationFrame       ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame    ||
-          function( callback ){
-            window.setTimeout(callback, 1000 / 60);
-          };
+    return  window.requestAnimationFrame       ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            function( callback ){
+              window.setTimeout(callback, 1000 / 60);
+            };
 })();
 
+/**
+ * Creates a new Grid 
+ * @class
+ * @param {Object} opts - options object
+ * @param {string} opts.id - grid canvas id
+ * @param {string} opts.class - grid canvas class
+ * @param {number} opts.height - grid canvas height
+ * @param {boolean} opts.showGrid - show/hide dot grid
+ * @param {number} opts.pixDensity - grid pixel density
+ * @param {number} opts.angle - initial dot angle
+ * @param {number} opts.dotRadius - dot radius
+ * @param {string} opts.dotColor - dot color
+ * @param {number} opts.dotLineWidth - dot line width
+ * @param {number} opts.spacing - dot spacing
+ * @param {number} opts.lineLength - grid line length
+ * 
+ */
 class Grid {
     constructor(opts) {
         this.id = opts.id;
         this.class = opts.class;
         this.height = opts.height;
         this.showGrid = opts.showGrid;
-        this.pixDensity = 2;
+        this.pixDensity = opts.pixDensity || 2;
         this.angle = opts.angle || Math.PI/10;
-        this.size = (opts.size || 30) * this.pixDensity;
+        this.dotRadius = (opts.dotRadius || 0.5) * this.pixDensity;
+        this.dotColor = opts.dotColor || '#787878';
+        this.dotLineWidth = opts.dotLineWidth || 1;
+        this.spacing = (opts.spacing || 30) * this.pixDensity;
         this.lineLength = (opts.lineLength || 10) * this.pixDensity;
+
+        // array of shapes on grid
         this.shapes = [];
+        // array of breakpoints
         this.breakpoints = [];
         this.currentBreakpoint = 0;
+        // initial mouse position
         this.mouseX = 0;
         this.mouseY = 0;
+        // canvas context
+        this.element = null;
+        this.context = null;
+        // initialise canvas
+        this.init();
+    }
+
+    init(){
+        // create canvas element
+        const canvas = $('<canvas></canvas>');
+        canvas.attr('id',this.id);
+        canvas.css({'width':'100%'});
+        canvas.addClass(this.class);
+
+        // add to body
+        $('body').prepend(canvas);
+
+        // store references to element and context
+        this.element = document.getElementById(this.id);
+        this.context = this.element.getContext('2d');
+
+        // fit canvas to window
+        this.resize();
+
+        // draw grid
+        this.drawGrid();
+
+        const self = this;
+        document.addEventListener('touchmove', function(e){
+            self.mouseX = e.changedTouches[0].clientX*self.pixDensity;
+            self.mouseY = e.changedTouches[0].clientY*self.pixDensity;
+            self.drawGrid();
+        });
+
+        document.addEventListener('mousemove', function(e){
+            self.mouseX = e.clientX*self.pixDensity;
+            self.mouseY = e.clientY*self.pixDensity;
+            self.drawGrid();
+        });
+
+        window.addEventListener('resize', function(e){
+            self.resize();
+            self.drawGrid();
+        });
+    }
+    
+    /**
+     * Takes a pixel value x and returns its location on the grid
+     * @param {number} x
+     * @returns {number}
+     */
+    scale(x){
+        return Math.floor((x*this.pixDensity)/this.spacing);
     }
 
     makeBreakpoints(){
-        for(var i=0; i<this.breakpoints.length; i++){
-            if(this.breakpoints[i].size < this.width/this.pixDensity){
-                this.currentBreakpoint = this.breakpoints[i].size;
-                this.shapes = this.breakpoints[i].shapes;
+        // make breakpoints from grid instance's breakpoints array
+        // loop through breakpoints in breakpoints array
+        this.breakpoints.forEach((breakpoint)=>{
+            // if looped breakpoint size is smaller than canvas size
+            if(breakpoint.size < this.width/this.pixDensity){
+                // set as current breakpoint
+                this.currentBreakpoint = breakpoint.size;
+                // and use this breakpoint's shapes
+                this.shapes = breakpoint.shapes;
             } else {
                 return;
             }
-        }
+        });
     }
 
-    scale(x){
-        return Math.floor((x*this.pixDensity)/this.size);
-    }
-
-    calc(object){
-        if (typeof(object) === 'object'){
-            return this.scale(object.perc * this[object.dimension]/this.pixDensity) + object.offset;
-        }
-        return object;
-    }
-
-    addBreakpoint(settings){
-        var object = {};
-        for(var key in settings){
-            object[key] = settings[key];
-        }
-        this.breakpoints.push(object);
-        this.breakpoints = this.breakpoints.sort(function(a,b){return a.size - b.size});
+    /**
+     * Adds new breakpoint object to breakpoints array
+     * @param {Instance.<Breakpoint>} breakpoint 
+     */
+    addBreakpoint(breakpoint){
+        this.breakpoints.push(breakpoint);
+        // re-sort breakpoints in ascending order of size
+        this.breakpoints = this.breakpoints.sort(function(a,b){return a.size - b.size;});
         this.makeBreakpoints();
     }
 
+    /** 
+     * Draw the grid
+     */
     drawGrid() {
-        var c = this.context;
-        var ch = this.height;
-        var cw = this.width;
+        const canvas = this.context;
+        const canvasHeight = this.height;
+        const canvasWidth = this.width;
 
-        c.clearRect(0,0,cw,ch);
-        var start = {
-            x: (this.width - (Math.floor(this.width/this.size) * this.size))/2
+        // clear entire canvas
+        canvas.clearRect(0, 0, canvasWidth, canvasHeight);
+
+        // establish location of first point
+        const start = {
+            x: (this.width - (Math.floor(this.width/this.spacing) * this.spacing))/2
         };
 
         if(this.showGrid){
-            for(var i=start.x; i<cw+this.size; i+=this.size) {
-                for(var j=0;j<ch+this.size;j+=this.size){
-                    this.angle=Math.atan2(j-this.mouseY,i-this.mouseX);
-                    c.beginPath();
-                    c.arc(i-(this.lineLength*Math.cos(this.angle)),j-(this.lineLength*Math.sin(this.angle)),0.75,0,Math.PI*2);
-                    //support ie:
-                    var ij = Math.sqrt(Math.pow(i-this.mouseX,2),Math.pow(j-this.mouseY,2));
-                    //support ie:
-                    var cwch = Math.sqrt(Math.pow(cw,2),Math.pow(ch,2));
-                    var fade = Math.floor(255-(255/(cwch/ij)));
-                    var opacityFade = 1-(ij/(cwch*2));
-                    c.lineWidth=1;
-                    c.strokeStyle="rgba(120,120,120,"+1+")";
-                    c.stroke();
+            // loop through dots from left to right
+            for(let x = start.x; x < (canvasWidth + this.spacing); x += this.spacing) {
+                // loop through dots from top to bottom
+                for(let y = 0; y < (canvasHeight + this.spacing); y += this.spacing){
+                    this.angle = Math.atan2(y - this.mouseY, x - this.mouseX);
+                    canvas.beginPath();
+                    // create dot
+                    canvas.arc(
+                        x-(this.lineLength*Math.cos(this.angle)),
+                        y-(this.lineLength*Math.sin(this.angle)),
+                        this.dotRadius, 0, Math.PI*2);
+
+                    canvas.lineWidth = this.dotLineWidth;
+                    canvas.strokeStyle = this.dotColor;
+                    canvas.stroke();
                 }
             }
         }
 
         // draw shapes
-        for(var k=0; k<this.shapes.length; k++){
-            var secPath = [];
-            for(var l=0;l<this.shapes[k].corners.length;l++){
-                var shape = this.shapes[k];
-                var corners = [this.calc(shape.corners[l][0]), this.calc(shape.corners[l][1])];
-                secPath.push([((start.x+corners[0]*this.size)-(this.lineLength*Math.cos(Math.atan2((corners[1]*this.size)-this.mouseY,(corners[0]*this.size)-this.mouseX)))),((corners[1]*this.size)-(this.lineLength*Math.sin(Math.atan2((corners[1]*this.size)-this.mouseY,(corners[0]*this.size)-this.mouseX))))]);
-            }
+        this.shapes.forEach((shape)=>{
+            // for each shape in shapes array
+            // create empty path array
+            var shapePath = [];
 
-            c.fillStyle=shape.color;
-            c.beginPath();
-            c.moveTo(secPath[0][0],secPath[0][1]);
+            shape.corners.forEach((corner)=>{
+                // calculate dynamic points based on canvas dimensions
+                corner = corner.calc(this);
 
-            for (var m=1; m<secPath.length; m++) {
-              c.lineTo(secPath[m][0],secPath[m][1]);
-            }
+                // calculate points based on mouse position
+                shapePath.push(
+                    {
+                        x: ((start.x+corner.x*this.spacing)-(this.lineLength*Math.cos(Math.atan2((corner.y*this.spacing)-this.mouseY,(corner.x*this.spacing)-this.mouseX)))),
+                        y: ((corner.y*this.spacing)-(this.lineLength*Math.sin(Math.atan2((corner.y*this.spacing)-this.mouseY,(corner.x*this.spacing)-this.mouseX))))
+                    });
+            });
 
-            c.closePath();
-            c.fill();
-        }
+            canvas.fillStyle = shape.color;
+            
+            // draw shape path
+            canvas.beginPath();
+            shapePath.forEach((point, index)=>{
+                if(index === 0){
+                    canvas.moveTo(point.x, point.y);
+                } else {
+                    canvas.lineTo(point.x, point.y);
+                }
+            });
+            canvas.closePath();
+            canvas.fill();
+
+        });
     }
 }
+
+/**
+ * Creates a new Shape to be added to a Breakpoint 
+ * @class Shape
+ * @param {Object} opts - options object
+ * @param {Array} opts.corners - array of corner points
+ * @param {string} opts.color - shape color
+ */
 
 class Shape {
-    constructor(settings) {
-        for (var key in settings){
-            this[key] = settings[key];
+    constructor(opts) {
+        this.corners = opts.corners;
+        this.color = opts.color;
+        for (var key in opts){
+            this[key] = opts[key];
         }
     }
 }
+
+/**
+ * Creates a new Breakpoint to be added to a Grid 
+ * @class
+ * @param {number} size - breakpoint size
+ */
 
 class Breakpoint {
     constructor(size){
@@ -132,93 +242,65 @@ class Breakpoint {
     }
 }
 
-class Background extends Grid {
-    constructor(id, size, showGrid, fixedHeight, angle, lineLength) {
-        super(id, size, showGrid, fixedHeight, angle, lineLength);
-        this.init();
+/**
+ * Creates a new Point to be used within a Shape
+ * @class
+ */
+
+class Point {
+    constructor(opts){
+        this.x = opts.x;
+        this.y = opts.y;
     }
 
-    init(){
-        var canvas = $('<canvas></canvas>');
-        canvas.attr('id',this.id);
-        canvas.css({'width':'100%'});
-        canvas.addClass(this.class);
-        $('body').prepend(canvas);
-        this.element = document.getElementById(this.id);
-        this.context = this.element.getContext('2d');
-        this.resize();
-        this.drawGrid();
-        var self = this;
-        document.addEventListener('touchmove', function(e){
-            self.mouseX = e.changedTouches[0].clientX*self.pixDensity;
-            self.mouseY = e.changedTouches[0].clientY*self.pixDensity;
-            self.drawGrid();
-        });
-        document.addEventListener('mousemove', function(e){
-            self.mouseX = e.clientX*self.pixDensity;
-            self.mouseY = e.clientY*self.pixDensity;
-            self.drawGrid();
-        });
-        window.addEventListener('resize', function(e){
-            self.resize();
-            self.drawGrid();
-        });
-    }
-
-    resize(){
-        this.width = window.innerWidth*2;
-        this.height = window.innerHeight*2;
-        this.element.width = this.width;
-        this.element.height = this.height;
-        this.makeBreakpoints();
+    calc(){
+        return this;
     }
 }
+
+/**
+ * Creates a new Dynamic Point to be used within a Shape
+ * @class
+ * @extends Point
+ */
+
+class DynamicPoint extends Point {
+    constructor(opts) {
+        super(opts);
+    }
+
+    calc(canvas){
+        let calculatedVal = {x: this.x, y: this.y};
+        if(typeof(this.x)==='object'){
+            calculatedVal.x = canvas.scale(this.x.perc * canvas.width/canvas.pixDensity) + this.x.offset;
+        }
+
+        if(typeof(this.y)==='object'){
+            calculatedVal.y = canvas.scale(this.y.perc * canvas.height/canvas.pixDensity) + this.y.offset;
+        }
+
+        return calculatedVal;
+    }
+}
+
+/**
+ * Creates a new Logo Grid
+ * @class
+ * @extends Grid
+ */
 
 class Logo extends Grid {
     constructor(opts) {
         super(opts);
         this.height = opts.height * this.pixDensity;
-        var test = new Shape({
-            corners: [
-                [0,0],[0,3],[{perc:1, offset: 0, dimension:'width'},3],[{perc:1, offset: 0, dimension:'width'},0]],
-            color: 'rgba(255,0,0,0.8)',
-        });
-        this.shapes = [test];
+
+        var randomPoint = function(){
+            return new DynamicPoint({perc: Math.random()/2, offset: 0}, Math.round(Math.random()*6)-1);
+        };
+
         for(var i=0;i<6;i++){
-            var randomPoint = function(){
-                return [{perc: Math.random()/2, offset: 0, dimension: 'width'}, Math.round(Math.random()*6)-1]
-            };
             this.shapes.push(new Shape({'corners':[randomPoint(), randomPoint(), randomPoint()],'color':'rgba(0,0,0,0.5)'}));
         }
-        this.init();
-    }
-
-    init(){
-        var canvas = $('<canvas></canvas>');
-        canvas.attr('id',this.id);
-        canvas.css({'width':'100%'});
-        canvas.addClass('c-logo-canvas');
-        canvas.addClass(this.class);
-        $('body').prepend(canvas);
-        this.element = document.getElementById(this.id);
-        this.context = this.element.getContext('2d');
-        this.resize();
-        this.drawGrid();
-        var self = this;
-        document.addEventListener('touchmove', function(e){
-            self.mouseX = e.changedTouches[0].clientX*self.pixDensity;
-            self.mouseY = e.changedTouches[0].clientY*self.pixDensity;
-            self.drawGrid();
-        });
-        document.addEventListener('mousemove', function(e){
-            self.mouseX = e.clientX*self.pixDensity;
-            self.mouseY = e.clientY*self.pixDensity;
-            self.drawGrid();
-        });
-        window.addEventListener('resize', function(e){
-            self.resize();
-            self.drawGrid();
-        });
     }
 
     resize(){
@@ -226,6 +308,25 @@ class Logo extends Grid {
         this.element.width = this.width;
         this.element.height = this.height;
     }
+}
 
 
+/**
+ * Creates a new Background Grid
+ * @class
+ * @extends Grid
+ */
+
+class Background extends Grid {
+    constructor(id, spacing, showGrid, fixedHeight, angle, lineLength) {
+        super(id, spacing, showGrid, fixedHeight, angle, lineLength);
+    }
+
+    resize(){
+        this.width = window.innerWidth * this.pixDensity;
+        this.height = window.innerHeight * this.pixDensity;
+        this.element.width = this.width;
+        this.element.height = this.height;
+        this.makeBreakpoints();
+    }
 }
