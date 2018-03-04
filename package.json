@@ -28,8 +28,5 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-processhtml": "^0.4.1"
   },
-  "dependencies": {
-    "bulma": "^0.6.0",
-    "font-awesome": "^4.7.0"
-  }
+  "dependencies": {}
 }

@@ -57,21 +57,8 @@ module.exports = function(grunt){
         main: {
             files: [
                 {
-                    cwd: 'node_modules',
-                    src: ['bulma/css/bulma.css*', 'font-awesome/css/font-awesome.css*'],
-                    dest: 'css/vendor/',
-                    expand: true,
-                    flatten: true,
-                },
-                {
-                    cwd: 'node_modules/font-awesome/fonts',
-                    src: ['*'],
-                    dest: 'css/fonts',
-                    expand: true,
-                },
-                {
                     cwd: 'src',
-                    src: ['fonts/**', 'images/**', 'js/**', 'templates/**'],
+                    src: ['images/**', 'js/**', 'templates/**'],
                     dest: '.',
                     expand: true,
                 }
