@@ -12,3 +12,4 @@ templates
 !src/css
 !src/templates
 .sass-lint.yml
+out
